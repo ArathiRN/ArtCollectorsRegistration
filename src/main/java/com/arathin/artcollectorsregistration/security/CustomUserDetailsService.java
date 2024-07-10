@@ -15,10 +15,10 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class CustomArtCollectorDetailsService implements ArtCollectorDetailsService  {
+public class CustomUserDetailsService implements UserDetailsService {
     final private ArtCollectorRepository artCollectorRepository;
 
-    public CustomArtCollectorDetailsService(ArtCollectorRepository artCollectorRepository){
+    public CustomUserDetailsService(ArtCollectorRepository artCollectorRepository){
         this.artCollectorRepository = artCollectorRepository;
     }
 
@@ -30,7 +30,7 @@ public class CustomArtCollectorDetailsService implements ArtCollectorDetailsServ
         if (artCollector != null) {
             return new org.springframework.security.core.userdetails.User(artCollector.getEmail(),
                     artCollector.getPassword(),
-                    mapRolesToAuthorities(artCollector.getRole()));
+                    mapRolesToAuthorities(artCollector.getRoles()));
         }else{
             throw new UsernameNotFoundException("Invalid email or password.");
         }
